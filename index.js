@@ -54,7 +54,7 @@ async function run(){
         });
 
 
-// user
+// user get
   app.get('/users/:email', async(req, res) =>{
       const email = req.params.email;
       const query = { email: email };
@@ -66,6 +66,12 @@ async function run(){
     res.json({admin: isAdmin});
   })
 
+// user post
+  app.post('/users', async(req, res) => {
+      const user = req.body;
+      const result = await usersCollection.insertOne(user);
+      res.json(result);
+  })
 
 
 

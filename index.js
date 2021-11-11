@@ -31,13 +31,13 @@ async function run(){
         // reviews
         const reviewsCollection = database.collection('reviews');
 
-// GET API
+// products load
         app.get('/products', async(req, res) => {
             const cursor = productsCollection.find({});
             const products = await cursor.toArray();
             res.send(products);
         })
-// GET SINGLE PRODUCT
+// single product load
         app.get('/products/:id', async (req, res) =>{
             const id = req.params.id;
             console.log('getting specific service', id);
@@ -57,7 +57,7 @@ async function run(){
         });
 
 
-// user get
+// user
   app.get('/users/:email', async(req, res) =>{
       const email = req.params.email;
       const query = { email: email };
@@ -69,12 +69,37 @@ async function run(){
     res.json({admin: isAdmin});
   })
 
-// user post
+
   app.post('/users', async(req, res) => {
       const user = req.body;
       const result = await usersCollection.insertOne(user);
       res.json(result);
   })
+
+
+// admin
+        app.put('/users/admin', async(req, res) => {
+            const user = req.body;
+            const requester = req.decodeEmail;
+            if(requester){
+                const requesterAccount = await usersCollection.findOne({email: requester});
+                if(requesterAccount.role === 'admin'){
+                    const filter = {email: user.email};
+                    const updateDoc = { $set: { role: 'admin' } };
+                    const result = await usersCollection.updateOne(filter, updateDoc);
+                    res.json(result);
+                }
+            }
+
+            else{
+                res.status(403).json({ message: 'you do not have access to make admin' })
+            }
+        })
+
+
+
+
+
 
 
 // reviews
@@ -88,7 +113,6 @@ async function run(){
 
         app.post('/reviews', async (req, res) => {
             const review = req.body;
-            // console.log('Hit the post api', review);
             const result = await reviewsCollection.insertOne(review);
             res.json(result);
             
@@ -96,6 +120,7 @@ async function run(){
 
     }
 
+            
 
 
 

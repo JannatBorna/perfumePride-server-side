@@ -26,7 +26,7 @@ async function run(){
         const productsCollection = database.collection('products')
 
         // //user collection
-        // const usersCollection = database.collection('users');
+        const usersCollection = database.collection('users');
 
 // GET API
         app.get('/products', async(req, res) => {
@@ -52,6 +52,23 @@ async function run(){
             console.log(result);
             res.json(result);
         });
+
+
+// user
+  app.get('/users/:email', async(req, res) =>{
+      const email = req.params.email;
+      const query = { email: email };
+      const user = await usersCollection.findOne(query);
+      let isAdmin = false;
+      if(user?.role === 'admin'){
+          isAdmin = true;
+      }
+    res.json({admin: isAdmin});
+  })
+
+
+
+
 
     }
 

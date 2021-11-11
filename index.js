@@ -69,12 +69,12 @@ async function run(){
     res.json({admin: isAdmin});
   })
 
-
-  app.post('/users', async(req, res) => {
+    app.post('/users', async(req, res) => {
       const user = req.body;
       const result = await usersCollection.insertOne(user);
       res.json(result);
   })
+  
 
 
 // admin

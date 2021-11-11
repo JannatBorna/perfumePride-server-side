@@ -78,16 +78,11 @@ async function run(){
 
 
 // reviews
-        app.get('/reviews/:email', async (req, res) => {
-            const email = req.params.email;
-            const query = { email: email };
-            const review = await reviewsCollection.findOne(query);
-            let isAdmin = false;
-            if (review?.role === 'admin') {
-                isAdmin = true;
-            }
-            res.json({ admin: isAdmin });
-        })
+        app.get('/reviews', async (req, res) => {
+            const cursor = reviewsCollection.find({});
+            const reviews = await cursor.toArray();
+            res.send(reviews);
+            })
 
         // user post
         app.post('/reviews', async (req, res) => {
@@ -95,6 +90,14 @@ async function run(){
             const result = await usersCollection.insertOne(review);
             res.json(result);
         })
+
+        app.post('/reviews', async (req, res) => {
+            const review = req.body;
+            // console.log('Hit the post api', review);
+            const result = await reviewsCollection.insertOne(review);
+            res.json(result);
+            
+        });
 
     }
 

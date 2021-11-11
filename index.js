@@ -3,6 +3,7 @@ const app = express()
 const cors = require('cors');
 require('dotenv').config();
 const { MongoClient } = require('mongodb');
+const ObjectId = require('mongodb').ObjectId;
 
 const port = process.env.PORT || 5000;
 
@@ -21,7 +22,7 @@ async function run(){
     try{
         await client.connect();
         console.log('connected to database')
-        const database = client.db('tourismHotel');
+        const database = client.db('perfumePride');
         const productsCollection = database.collection('products')
 
         // //user collection
@@ -33,16 +34,25 @@ async function run(){
             const products = await cursor.toArray();
             res.send(products);
         })
+// GET SINGLE PRODUCT
+        app.get('/products/:id', async (req, res) =>{
+            const id = req.params.id;
+            console.log('getting specific service', id);
+            const query = {_id: ObjectId(id)};
+            const product = await productsCollection.findOne(query);
+            res.json(product);
+        })
 
 
-        //POST API
-        // app.post('/products', async (req, res) => {
-        //     const products = req.body;
-        //     console.log('Hit the post api', service);
-        //     const result = await servicesCollection.insertOne(service);
-        //     console.log(result);
-        //     res.json(result);
-        // });
+//POST API
+        app.post('/products', async (req, res) => {
+            const product = req.body;
+            console.log('Hit the post api', product);
+            const result = await productsCollection.insertOne(product);
+            console.log(result);
+            res.json(result);
+        });
+
     }
 
 

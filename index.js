@@ -28,6 +28,9 @@ async function run(){
         // //user collection
         const usersCollection = database.collection('users');
 
+        // reviews
+        const reviewsCollection = database.collection('reviews');
+
 // GET API
         app.get('/products', async(req, res) => {
             const cursor = productsCollection.find({});
@@ -74,7 +77,24 @@ async function run(){
   })
 
 
+// reviews
+        app.get('/reviews/:email', async (req, res) => {
+            const email = req.params.email;
+            const query = { email: email };
+            const review = await reviewsCollection.findOne(query);
+            let isAdmin = false;
+            if (review?.role === 'admin') {
+                isAdmin = true;
+            }
+            res.json({ admin: isAdmin });
+        })
 
+        // user post
+        app.post('/reviews', async (req, res) => {
+            const review = req.body;
+            const result = await usersCollection.insertOne(review);
+            res.json(result);
+        })
 
     }
 

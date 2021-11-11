@@ -25,8 +25,11 @@ async function run(){
         const database = client.db('perfumePride');
         const productsCollection = database.collection('products')
 
-        // //user collection
+        //user collection
         const usersCollection = database.collection('users');
+
+        //order place
+        const ordersCollection = database.collection('orders');
 
         // reviews
         const reviewsCollection = database.collection('reviews');
@@ -57,7 +60,7 @@ async function run(){
         });
 
 
-// user
+// admin verified
   app.get('/users/:email', async(req, res) =>{
       const email = req.params.email;
       const query = { email: email };
@@ -116,6 +119,24 @@ async function run(){
             const result = await reviewsCollection.insertOne(review);
             res.json(result);
             
+        });
+
+
+
+// order 
+        app.get('/orders', async (req, res) => {
+            const cursor = ordersCollection.find({});
+            const orders = await cursor.toArray();
+            res.send(orders);
+        })
+
+
+
+        app.post('/orders', async (req, res) => {
+            const order = req.body;
+            const result = await ordersCollection.insertOne(order);
+            res.json(result);
+
         });
 
     }

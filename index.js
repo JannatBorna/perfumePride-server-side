@@ -25,6 +25,7 @@ async function run(){
         const database = client.db('perfumePride');
         const productsCollection = database.collection('products')
 
+         
 
 
         //user collection
@@ -163,7 +164,13 @@ async function run(){
 
         });
 
-
+        app.get('/homeProducts/:id', async (req, res) => {
+            const id = req.params.id;
+            console.log('getting specific service', id);
+            const query = { _id: ObjectId(id) };
+            const homeProduct = await homeProductsCollection.findOne(query);
+            res.json(homeProduct);
+        })
 
     }
 

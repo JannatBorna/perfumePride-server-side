@@ -25,6 +25,8 @@ async function run(){
         const database = client.db('perfumePride');
         const productsCollection = database.collection('products')
 
+
+
         //user collection
         const usersCollection = database.collection('users');
 
@@ -33,6 +35,9 @@ async function run(){
 
         // reviews
         const reviewsCollection = database.collection('reviews');
+
+        // product
+        const homeProductsCollection = database.collection('homeProducts')
 
 // products load
         app.get('/products', async(req, res) => {
@@ -138,6 +143,27 @@ async function run(){
             res.json(result);
 
         });
+
+
+
+
+// product 
+        app.get('/homeProducts', async (req, res) => {
+            const cursor = homeProductsCollection.find({});
+            const homeProducts = await cursor.toArray();
+            res.send(homeProducts);
+        })
+
+
+
+        app.post('/homeProducts', async (req, res) => {
+            const homeProduct = req.body;
+            const result = await homeProductsCollection.insertOne(homeProduct);
+            res.json(result);
+
+        });
+
+
 
     }
 

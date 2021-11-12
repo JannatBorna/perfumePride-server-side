@@ -173,7 +173,7 @@ async function run(){
             const updateDoc = {
                 $set: {
                     name: updatedOrder.name,
-                    price: updatedOrder.price,
+                   
                 },
             };
             const result = await ordersCollection.updateOne(filter, updateDoc, options)

@@ -65,6 +65,17 @@ async function run(){
             res.json(result);
         });
 
+//Delete api product
+        app.delete('/products/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await productsCollection.deleteOne(query);
+            res.json(result);
+        })
+
+
+
+
 
 // admin verified
   app.get('/users/:email', async(req, res) =>{
@@ -171,7 +182,7 @@ async function run(){
             res.json(homeProduct);
         })
             
-//Delete api
+//Delete api order
         app.delete('/orders/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };

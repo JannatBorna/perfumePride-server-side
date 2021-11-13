@@ -190,28 +190,28 @@ async function run(){
 
 
 
-// product 
-        app.get('/homeProducts', async (req, res) => {
-            const cursor = homeProductsCollection.find({});
-            const homeProducts = await cursor.toArray();
-            res.send(homeProducts);
-        })
+// // product 
+//         app.get('/homeProducts', async (req, res) => {
+//             const cursor = homeProductsCollection.find({});
+//             const homeProducts = await cursor.toArray();
+//             res.send(homeProducts);
+//         })
 
 
 
-        app.post('/homeProducts', async (req, res) => {
-            const homeProduct = req.body;
-            const result = await homeProductsCollection.insertOne(homeProduct);
-            res.json(result);
+//         app.post('/homeProducts', async (req, res) => {
+//             const homeProduct = req.body;
+//             const result = await homeProductsCollection.insertOne(homeProduct);
+//             res.json(result);
 
-        });
+//         });
 
-        app.get('/homeProducts/:id', async (req, res) => {
-            const id = req.params.id;
-            const query = { _id: ObjectId(id) };
-            const homeProduct = await homeProductsCollection.findOne(query);
-            res.json(homeProduct);
-        })
+//         app.get('/homeProducts/:id', async (req, res) => {
+//             const id = req.params.id;
+//             const query = { _id: ObjectId(id) };
+//             const homeProduct = await homeProductsCollection.findOne(query);
+//             res.json(homeProduct);
+//         })
             
 
 

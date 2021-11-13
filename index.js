@@ -37,8 +37,7 @@ async function run(){
         // reviews
         const reviewsCollection = database.collection('reviews');
 
-        // product
-        const homeProductsCollection = database.collection('homeProducts')
+        
 
 // products load
         app.get('/products', async(req, res) => {
@@ -187,45 +186,13 @@ async function run(){
             res.json(result)
 
         })
-
-
-
-// // product 
-//         app.get('/homeProducts', async (req, res) => {
-//             const cursor = homeProductsCollection.find({});
-//             const homeProducts = await cursor.toArray();
-//             res.send(homeProducts);
-//         })
-
-
-
-//         app.post('/homeProducts', async (req, res) => {
-//             const homeProduct = req.body;
-//             const result = await homeProductsCollection.insertOne(homeProduct);
-//             res.json(result);
-
-//         });
-
-//         app.get('/homeProducts/:id', async (req, res) => {
-//             const id = req.params.id;
-//             const query = { _id: ObjectId(id) };
-//             const homeProduct = await homeProductsCollection.findOne(query);
-//             res.json(homeProduct);
-//         })
             
 
 
 
     }
 
-            
-
-
-
-
-
-
-    finally{
+finally{
         // await client.close()
     }
 }
@@ -239,6 +206,13 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log(`listening at ${port}`)
 })
+
+            
+
+
+    
+
+
 
 
 

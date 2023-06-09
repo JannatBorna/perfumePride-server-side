@@ -19,7 +19,7 @@ async function run(){
     try{
         await client.connect();
         console.log('database connected successfully')
-        const database = client.db('perfume_pride');
+        const database = client.db('perfumePride');
         const productCollection = database.collection('products')
 
          

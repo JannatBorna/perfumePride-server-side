@@ -191,7 +191,7 @@ app.get('/', (req, res) => {
 
 
 app.listen(port, () => {
-    console.log(`perfume-pride listening at ${port}`)
+    console.log(`perfumePride listening at ${port}`)
     console.log('server running at port', port);
 })
 
